@@ -1,29 +1,33 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.12)
 
 project(BerlinUhr)
 
 find_package(Qt5Widgets)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-#set(CMAKE_AUTORCC ON)
+set (CMAKE_CXX_STANDARD 14)
 
-#QT5_WRAP_CPP(Source_hdr_moc source/oscillwidget.hpp)
+set (MyProjectLib_src ${PROJECT_SOURCE_DIR}/source/mainwindow.cpp)
+set (MyProjectLib_hdr ${PROJECT_SOURCE_DIR}/header/mainwindow.hpp)
+set (MyProjectLib_ui  ${PROJECT_SOURCE_DIR}/forms/main_window.ui)
+set (MyProjectBin_src ${PROJECT_SOURCE_DIR}/source/main.cpp)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/header)
+qt5_wrap_cpp (MyProjectLib_hdr_moc ${MyProjectLib_hdr})
+qt5_wrap_ui (MyProjectLib_ui_moc  ${MyProjectLib_ui})
 
-#add_library(MOCcode ${Source_hdr_moc} )
-#target_compile_options(MOCcode PUBLIC -std=c++14)
+include_directories (${PROJECT_SOURCE_DIR}/header)
+include_directories (${PROJECT_BINARY_DIR})
 
-#qt5_use_modules(MOCcode Widgets)
+add_library (MyProjectLib STATIC
+    ${MyProjectLib_src}
+    ${MyProjectLib_hdr_moc}
+    ${MyProjectLib_ui_moc}
+)
+target_link_libraries (MyProjectLib Qt5::Widgets)
 
-set (HEADERS header/berlin_clock.hpp)
+add_executable(BerlinUhr ${MyProjectBin_src})
+target_link_libraries (BerlinUhr MyProjectLib)
+#
+# run with cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_BUILD_TYPE=Debug  -DCMAKE_PREFIX_PATH=C:/DevTools/Qt/5.7/msvc2015_64/lib/cmake
 
-set (SOURCE  source/main.cpp
-     source/berlin_clock.cpp)
-
-add_executable(BerlinUhr ${HEADERS} ${SOURCE} )
 qt5_use_modules(BerlinUhr Core Gui Widgets)
-
-target_compile_options(BerlinUhr PUBLIC -std=c++14)
 

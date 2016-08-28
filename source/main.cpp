@@ -1,9 +1,17 @@
 #include <cassert>
 #include "berlin_clock.hpp"
+#include "mainwindow.hpp"
+#include <QApplication>
 
 int main()
 {
    BerlinClock Bc;
+
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
 
    // Tests for single minute lamps
    std::string MinuteResultLamps;
