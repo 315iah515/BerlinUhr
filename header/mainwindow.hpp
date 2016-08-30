@@ -1,11 +1,13 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOW_HPP_DEFINED
+#define MAINWINDOW_HPP_DEFINED
 
 #include <QMainWindow>
 
 namespace Ui {
 class MainWindow;
 }
+
+class QAction;
 
 class MainWindow : public QMainWindow
 {
@@ -15,8 +17,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+
+
 private:
     Ui::MainWindow *ui;
+    QAction *mpExitAct;
+
+    void CreateActions();
+    void CreateMenus();
+
 };
 
-#endif // MAINWINDOW_H 
+#endif // MAINWINDOW_HPP_DEFINED
