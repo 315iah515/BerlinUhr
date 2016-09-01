@@ -21,12 +21,21 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    mpScene(nullptr),
     mpExitAct(nullptr)
 {
     ui->setupUi(this);
     CreateActions();
     CreateMenus();
     DrawLights();
+
+    ui->GraphicsView->setScene(mpScene);
+    ui->GraphicsView->setFrameStyle(0);
+    ui->GraphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    ui->GraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->GraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //mpGView->setGeometry(QRect(0, 0, 761, 761));
+    ui->GraphicsView->show();
 }
 
 MainWindow::~MainWindow()
@@ -89,17 +98,10 @@ MainWindow::DrawLights()
     vpLight3->setFillColor(Qt::black);
     vpLight4->setFillColor(Qt::red);
 
-    QGraphicsScene Scene(0, 0, 300, 300);
-    Scene.setBackgroundBrush(Qt::black);
-    Scene.addItem(vpLight1);
-    Scene.addItem(vpLight2);
-    Scene.addItem(vpLight3);
-    Scene.addItem(vpLight4);
-
-    ui->GraphicsView->setScene(&Scene);
-    ui->GraphicsView->setFrameStyle(0);
-    ui->GraphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    ui->GraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->GraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
+    mpScene = new QGraphicsScene(0, 0, 700, 700);
+    mpScene->setBackgroundBrush(Qt::black);
+    mpScene->addItem(vpLight1);
+    mpScene->addItem(vpLight2);
+    mpScene->addItem(vpLight3);
+    mpScene->addItem(vpLight4);
 }

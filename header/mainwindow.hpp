@@ -24,7 +24,9 @@ namespace Ui {
 class MainWindow;
 }
 
+
 class QAction;
+class QGraphicsScene;
 
 //--------------------------------------------------------------------------------------------------
 //  Class:
@@ -54,6 +56,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *mpScene;
     QAction *mpExitAct;
 
     void CreateActions();
