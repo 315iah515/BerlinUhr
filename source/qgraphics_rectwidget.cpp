@@ -46,5 +46,5 @@
 void
 QGraphicsRectWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    painter->fillRect(rect(), Qt::blue);
+    painter->fillRect(rect(), mFillColor);
 }

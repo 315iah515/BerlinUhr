@@ -1,3 +1,20 @@
+//==================================================================================================
+//  File Name:
+//      mainwindow.hpp
+//
+//  Product:
+//      BerlinUhr
+//
+//  Interface Header:
+//
+//
+//  Authors:
+//      Ian Heaton
+//
+//  Copyright Notice:
+//
+//==================================================================================================
+//
 #ifndef MAINWINDOW_HPP_DEFINED
 #define MAINWINDOW_HPP_DEFINED
 
@@ -9,6 +26,21 @@ class MainWindow;
 
 class QAction;
 
+//--------------------------------------------------------------------------------------------------
+//  Class:
+//      CLASS_NAME
+//
+//  Summary:
+//      Does ...
+//
+//
+//  Remarks:
+//      {Optional...}
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,6 +58,7 @@ private:
 
     void CreateActions();
     void CreateMenus();
+    void DrawLights();
 
 };
 
