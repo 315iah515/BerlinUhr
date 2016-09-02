@@ -19,6 +19,8 @@
 #define MAINWINDOW_HPP_DEFINED
 
 #include <QMainWindow>
+#include <vector>
+
 
 namespace Ui {
 class MainWindow;
@@ -27,13 +29,14 @@ class MainWindow;
 
 class QAction;
 class QGraphicsScene;
+class QGraphicsRectWidget;
 
 //--------------------------------------------------------------------------------------------------
 //  Class:
 //      CLASS_NAME
 //
 //  Summary:
-//      Does ...
+//      Holds the graphics scene housing the Mengenlehreclock
 //
 //
 //  Remarks:
@@ -55,13 +58,23 @@ private slots:
 
 
 private:
+    using RectContainer = std::vector<QGraphicsRectWidget*>;
+
     Ui::MainWindow *ui;
     QGraphicsScene *mpScene;
-    QAction *mpExitAct;
+    QAction        *mpExitAct;
+    RectContainer  mFiveHourLamps;
+    RectContainer  mOneHourLamps;
+    RectContainer  mFiveMinuteLamps;
+    RectContainer  mOneMinuteLamps;
+    QGraphicsRectWidget* mpSecondsLamp;
+
+
 
     void CreateActions();
     void CreateMenus();
-    void DrawLights();
+    void CreateLamps();
+    void CreateSceneLayout();
 
 };
 
