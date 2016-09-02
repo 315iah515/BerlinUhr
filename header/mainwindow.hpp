@@ -30,10 +30,12 @@ class MainWindow;
 class QAction;
 class QGraphicsScene;
 class QGraphicsRectWidget;
+class QGraphicsLinearLayout;
+class QGraphicsGridLayout;
 
 //--------------------------------------------------------------------------------------------------
 //  Class:
-//      CLASS_NAME
+//      MainWindow
 //
 //  Summary:
 //      Holds the graphics scene housing the Mengenlehreclock
@@ -69,7 +71,12 @@ private:
     RectContainer  mOneMinuteLamps;
     QGraphicsRectWidget* mpSecondsLamp;
 
-
+    QGraphicsGridLayout   *mpContainerLayout;
+    QGraphicsLinearLayout *mpSecondsLayout;
+    QGraphicsLinearLayout *mpFiveHourLayout;
+    QGraphicsLinearLayout *mpOneHourLayout;
+    QGraphicsLinearLayout *mpFiveMinuteLayout;
+    QGraphicsLinearLayout *mpOneMinuteLayout;
 
     void CreateActions();
     void CreateMenus();

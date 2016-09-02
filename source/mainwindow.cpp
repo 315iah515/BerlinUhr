@@ -18,6 +18,12 @@
 #include "ui_main_window.h"
 #include "qgraphics_rectwidget.hpp"
 
+namespace {
+
+    unsigned int sMargin = 30;
+    unsigned int sViewHeight = 400;
+
+}
 //--------------------------------------------------------------------------------------------------
 //  Member Function:
 //      MainWindow()
@@ -34,12 +40,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     mpScene(nullptr),
     mpExitAct(nullptr),
-    mpSecondsLamp(nullptr)
+    mpSecondsLamp(nullptr),
+    mpContainerLayout(nullptr),
+    mpSecondsLayout(nullptr),
+    mpFiveHourLayout(nullptr),
+    mpOneHourLayout(nullptr),
+    mpFiveMinuteLayout(nullptr),
+    mpOneMinuteLayout(nullptr)
+
 {
     ui->setupUi(this);
     CreateActions();
     CreateMenus();
     CreateLamps();
+    CreateSceneLayout();
 
     ui->GraphicsView->setScene(mpScene);
     ui->GraphicsView->setFrameStyle(0);
@@ -134,18 +148,13 @@ MainWindow::CreateMenus()
 //      CreateLamps()
 //
 //  Summary:
-//      Does...
+//      Instantiates all the lamps for the clock and places them into contains for later
+//      manipulation.
 //
-//
-//
-//  Returns:
-//      {Optional...}
-//
-//  Exceptions:
-//      {Optional...}
 //
 //  Remarks:
-//      Add layouts for QGraphicsRectWidgets
+//      deallocation of lamps takes place in deconstrcutor and may need to be removed if scene
+//      takes ownership of pointers
 //
 //  See Also:
 //      {Optional...}
@@ -157,7 +166,7 @@ MainWindow::CreateLamps()
     //- Seconds Lamp
     // Will need to create circle widget for this one
     mpSecondsLamp = new QGraphicsRectWidget;
-    mpSecondsLamp->setFillColor(Qt::black);
+    mpSecondsLamp->setFillColor(Qt::yellow);
 
     //- 5 hour lamps
     QGraphicsRectWidget *vpLight1 = new QGraphicsRectWidget;
@@ -247,10 +256,52 @@ MainWindow::CreateLamps()
 void
 MainWindow::CreateSceneLayout()
 {
+
+    mpSecondsLayout = new QGraphicsLinearLayout;
+    mpSecondsLayout->addItem(mpSecondsLamp);
+
+    mpFiveHourLayout = new QGraphicsLinearLayout;
+    for (auto const& lamp : mFiveHourLamps)
+    {
+        mpFiveHourLayout->addItem(lamp);
+    }
+
+    mpOneHourLayout = new QGraphicsLinearLayout;
+    for (auto const& lamp : mOneHourLamps)
+    {
+        mpOneHourLayout->addItem(lamp);
+    }
+
+    mpFiveMinuteLayout = new QGraphicsLinearLayout;
+    for (auto const& lamp : mFiveMinuteLamps)
+    {
+        mpFiveMinuteLayout->addItem(lamp);
+    }
+
+    mpOneMinuteLayout = new QGraphicsLinearLayout;
+    for (auto const& lamp : mOneMinuteLamps)
+    {
+        mpOneMinuteLayout->addItem(lamp);
+    }
+
+    mpContainerLayout = new QGraphicsGridLayout;
+    //mpContainerLayout->setSpacing(sMargin);
+    mpContainerLayout->addItem(mpSecondsLayout, 0, 0);
+    mpContainerLayout->addItem(mpFiveHourLayout, 1, 0);
+    mpContainerLayout->addItem(mpOneHourLayout, 2, 0);
+    mpContainerLayout->addItem(mpFiveMinuteLayout, 3, 0);
+    mpContainerLayout->addItem(mpOneMinuteLayout, 4, 0);
+
+    QGraphicsWidget *vpWidget = new QGraphicsWidget;
+    vpWidget->setLayout(mpContainerLayout);
+
+    int width = qRound(vpWidget->preferredWidth());
+    int height = sViewHeight + (2 * sMargin);
+    setMinimumSize(width, height);
+
     mpScene = new QGraphicsScene(0, 0, 700, 700);
+    mpScene->setSceneRect(0, 0, width, height);
     mpScene->setBackgroundBrush(Qt::black);
-//    mpScene->addItem(vpLight1);
-//    mpScene->addItem(vpLight2);
-//    mpScene->addItem(vpLight3);
-//    mpScene->addItem(vpLight4);
+    mpScene->addItem(vpWidget);
+
 }
