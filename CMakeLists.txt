@@ -7,10 +7,15 @@ find_package(Qt5Widgets)
 set (CMAKE_CXX_STANDARD 14)
 
 set (MyProjectLib_src ${PROJECT_SOURCE_DIR}/source/mainwindow.cpp
-	                  ${PROJECT_SOURCE_DIR}/source/qgraphics_rectwidget.cpp)
+	                  ${PROJECT_SOURCE_DIR}/source/qgraphics_rectwidget.cpp
+	                  ${PROJECT_SOURCE_DIR}/source/qgraphics_roundwidget.cpp)
+
 set (MyProjectLib_hdr ${PROJECT_SOURCE_DIR}/header/mainwindow.hpp
-	                  ${PROJECT_SOURCE_DIR}/header/qgraphics_rectwidget.hpp)
+	                  ${PROJECT_SOURCE_DIR}/header/qgraphics_rectwidget.hpp
+	                  ${PROJECT_SOURCE_DIR}/header/qgraphics_roundwidget.hpp)
+
 set (MyProjectLib_ui  ${PROJECT_SOURCE_DIR}/forms/main_window.ui)
+
 set (MyProjectBin_src ${PROJECT_SOURCE_DIR}/source/main.cpp
 	                  ${PROJECT_SOURCE_DIR}/source/berlin_clock.cpp )
 

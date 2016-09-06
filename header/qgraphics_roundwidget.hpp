@@ -1,6 +1,6 @@
 //==================================================================================================
 //  File Name:
-//      qgraphics_rectwidget.hpp
+//      qgraphics_roundwidget.hpp
 //
 //  Product:
 //      BerlinUhr
@@ -15,13 +15,13 @@
 //
 //==================================================================================================
 //
-#ifndef QGRAPGICS_RECTWIDGET_HPP_DEFINED
-#define QGRAPGICS_RECTWIDGET_HPP_DEFINED
+#ifndef QGRAPGICS_ROUNDWIDGET_HPP_DEFINED
+#define QGRAPGICS_ROUNDWIDGET_HPP_DEFINED
 
 #include <QGraphicsWidget>
 //--------------------------------------------------------------------------------------------------
 //  Class:
-//      QGraphicsRectWidget
+//      QGraphicsRoundWidget
 //
 //  Summary:
 //      Does ...
@@ -34,7 +34,7 @@
 //      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
-class QGraphicsRectWidget : public QGraphicsWidget
+class QGraphicsRoundWidget : public QGraphicsWidget
 {
      Q_OBJECT
      Q_PROPERTY(QColor color READ fillColor WRITE setFillColor)
@@ -50,16 +50,16 @@ private:
 };
 
 QColor inline
-QGraphicsRectWidget::fillColor() const
+QGraphicsRoundWidget::fillColor() const
 {
     return mFillColor;
 }
 
 void inline
-QGraphicsRectWidget::setFillColor(QColor color)
+QGraphicsRoundWidget::setFillColor(QColor color)
 {
     mFillColor = color;
 }
 
 
-#endif //- QGRAPGICS_RECTWIDGET_HPP_DEFINED
+#endif //- QGRAPGICS_ROUNDWIDGET_HPP_DEFINED

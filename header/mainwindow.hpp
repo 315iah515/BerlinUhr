@@ -30,6 +30,7 @@ class MainWindow;
 class QAction;
 class QGraphicsScene;
 class QGraphicsRectWidget;
+class QGraphicsRoundWidget;
 class QGraphicsLinearLayout;
 class QGraphicsGridLayout;
 
@@ -62,14 +63,14 @@ private slots:
 private:
     using RectContainer = std::vector<QGraphicsRectWidget*>;
 
-    Ui::MainWindow *ui;
-    QGraphicsScene *mpScene;
-    QAction        *mpExitAct;
-    RectContainer  mFiveHourLamps;
-    RectContainer  mOneHourLamps;
-    RectContainer  mFiveMinuteLamps;
-    RectContainer  mOneMinuteLamps;
-    QGraphicsRectWidget* mpSecondsLamp;
+    Ui::MainWindow        *ui;
+    QGraphicsScene        *mpScene;
+    QAction               *mpExitAct;
+    RectContainer         mFiveHourLamps;
+    RectContainer         mOneHourLamps;
+    RectContainer         mFiveMinuteLamps;
+    RectContainer         mOneMinuteLamps;
+    QGraphicsRoundWidget* mpSecondsLamp;
 
     QGraphicsGridLayout   *mpContainerLayout;
     QGraphicsLinearLayout *mpSecondsLayout;

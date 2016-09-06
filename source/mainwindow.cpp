@@ -17,6 +17,7 @@
 #include "mainwindow.hpp"
 #include "ui_main_window.h"
 #include "qgraphics_rectwidget.hpp"
+#include "qgraphics_roundwidget.hpp"
 
 namespace {
 
@@ -164,8 +165,7 @@ void
 MainWindow::CreateLamps()
 {
     //- Seconds Lamp
-    // Will need to create circle widget for this one
-    mpSecondsLamp = new QGraphicsRectWidget;
+    mpSecondsLamp = new QGraphicsRoundWidget;
     mpSecondsLamp->setFillColor(Qt::yellow);
 
     //- 5 hour lamps
