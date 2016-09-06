@@ -1,14 +1,14 @@
 #include <iomanip>
 #include <sstream>
 #include <iostream>
-#include  <cstdlib>
+#include <cstdlib>
 #include <array>
 #include "berlin_clock.hpp"
 
 
 namespace
 {
-   using LampPair = std::pair<unsigned int, char>;
+   using LampPair = std::pair<unsigned int, unsigned int>;
 
    std::array<LampPair, 5> sNumLampsPerRow = {
       std::make_pair(4, 'Y'),
@@ -20,78 +20,120 @@ namespace
 
 }
 
-
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      BerlinClock()
+//
+//  Summary:
+//      Slot - Does...
+//
+//
+//
+//  Exceptions:
+//      {Optional...}
+//
+//  Remarks:
+//
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
 BerlinClock::BerlinClock()
-   : mCurrentTime(),
-     mValidTime(false)
+   : mpCurrentTime(nullptr)
 {
 }
 
-bool 
-BerlinClock::AssignTime(std::string const & CurrentTime)
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      RetrieveLampRow()
+//
+//  Summary:
+//      Slot - Does...
+//
+//
+//
+//  Exceptions:
+//      {Optional...}
+//
+//  Remarks:
+//
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
+BerlinClock::LampColors
+BerlinClock::RetrieveLampRow(LampRow vLampRow)
 {
-   mValidTime = ConvertStrToTime(CurrentTime);
+    LampColors LampResult;
 
-   if (!mValidTime)
-   {
-      std::cout << "Parsing of input string failed, please use hh:mm:ss format." << std::endl;
-   }
-   
-   return mValidTime;
+    time_t now = time(nullptr);
+    mpCurrentTime = std::localtime(&now);
+
+//    switch (vLampRow)
+//    {
+//    case LampRow::SINGLE_MINUTES: LampResult = CalculateLamps(vLampRow);
+//        break;
+
+//    case LampRow::FIVE_MINUTE_BLOCKS: LampResult = CalculateLamps(vLampRow, false, true);
+//        break;
+
+//    case LampRow::ONE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow);
+//        break;
+
+//    case LampRow::FIVE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow, false);
+//        break;
+
+//    case LampRow::SECONDS_BLOCK: LampResult = CalculateLamps(vLampRow);
+//        break;
+//    }
+
+
+    return LampResult;
 }
 
-std::string
-BerlinClock::RetrieveLampRow(LightsRow vLampRow)
-{
-   std::string LampResult;
 
-   if (mValidTime)
-   {
-      switch (vLampRow)
-      {
-      case LightsRow::SINGLE_MINUTES: LampResult = CalculateLamps(vLampRow);
-         break;
-
-      case LightsRow::FIVE_MINUTE_BLOCKS: LampResult = CalculateLamps(vLampRow, false, true);
-         break;
-
-      case LightsRow::ONE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow);
-         break;
-
-      case LightsRow::FIVE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow, false);
-         break;
-
-      case LightsRow::SECONDS_BLOCK: LampResult = CalculateLamps(vLampRow);
-         break;
-      }
-   }
-
-   return LampResult;
-}
-
-
-
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      RetrieveLampRow()
+//
+//  Summary:
+//      Does...
+//
+//
+//
+//  Exceptions:
+//      {Optional...}
+//
+//  Remarks:
+//
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
 std::string 
-BerlinClock::CalculateLamps(LightsRow vLampRow, bool UseRemainder, bool HasMixedColors)
+BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedColors)
 {
    std::string Lamps;
 
    std::div_t Result{};
 
-   if (vLampRow == LightsRow::SINGLE_MINUTES || vLampRow == LightsRow::FIVE_MINUTE_BLOCKS)
+   if (vLampRow == LampRow::SINGLE_MINUTES || vLampRow == LampRow::FIVE_MINUTE_BLOCKS)
    {
-      Result = std::div(mCurrentTime.tm_min, 5);
+      Result = std::div(mpCurrentTime->tm_min, 5);
    }
-   else if (vLampRow == LightsRow::ONE_HOUR_BLOCKS || vLampRow == LightsRow::FIVE_HOUR_BLOCKS)
+   else if (vLampRow == LampRow::ONE_HOUR_BLOCKS || vLampRow == LampRow::FIVE_HOUR_BLOCKS)
    {
-      Result = std::div(mCurrentTime.tm_hour, 5);
+      Result = std::div(mpCurrentTime->tm_hour, 5);
    }
    else
    //- A bit of a kluge but for all other time components the quotient or remainder is
    // the number of lights on, except for seconds where the reminder is used to determine
    // if the number of seconds is even. The light is On for even seconds or off otherwise. 
    {
-      Result = std::div(mCurrentTime.tm_sec, 2);
+      Result = std::div(mpCurrentTime->tm_sec, 2);
       Result.rem = Result.rem == 0 ? 1 : 0;
    }
 
@@ -100,7 +142,7 @@ BerlinClock::CalculateLamps(LightsRow vLampRow, bool UseRemainder, bool HasMixed
    unsigned int number_of_lamps_on = (UseRemainder ? Result.rem : Result.quot);
    unsigned int number_of_lamps_off = total_lamps - number_of_lamps_on;
 
-   //- For LightsRow::FIVE_MINUTE_BLOCKS where yellow and red are used
+   //- For LampRow::FIVE_MINUTE_BLOCKS where yellow and red are used
    if (HasMixedColors)
    {
       for (std::size_t i = 0; i < number_of_lamps_on; ++i)
@@ -125,18 +167,36 @@ BerlinClock::CalculateLamps(LightsRow vLampRow, bool UseRemainder, bool HasMixed
    return Lamps;
 }
 
-
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      ConvertStrToTime()
+//
+//  Summary:
+//      Does...
+//
+//
+//
+//  Exceptions:
+//      {Optional...}
+//
+//  Remarks:
+//
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
 bool
 BerlinClock::ConvertStrToTime(std::string const & vTime)
 {
    bool Result = false;
    std::istringstream Ss(vTime);
-   Ss >> std::get_time(&mCurrentTime, "%H:%M:%S");
+   Ss >> std::get_time(mpCurrentTime, "%H:%M:%S");
 
    if (!Ss.fail())
    {
       Result = true;
-      //std::cout << std::put_time(&mCurrentTime, "%T") << std::endl;
+      //std::cout << std::put_time(&mpCurrentTime, "%T") << std::endl;
    }
 
    return Result;

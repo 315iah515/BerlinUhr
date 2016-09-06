@@ -12,7 +12,8 @@ set (MyProjectLib_src ${PROJECT_SOURCE_DIR}/source/mainwindow.cpp
 
 set (MyProjectLib_hdr ${PROJECT_SOURCE_DIR}/header/mainwindow.hpp
 	                  ${PROJECT_SOURCE_DIR}/header/qgraphics_rectwidget.hpp
-	                  ${PROJECT_SOURCE_DIR}/header/qgraphics_roundwidget.hpp)
+	                  ${PROJECT_SOURCE_DIR}/header/qgraphics_roundwidget.hpp
+	                  ${PROJECT_SOURCE_DIR}/header/rgba.hpp)
 
 set (MyProjectLib_ui  ${PROJECT_SOURCE_DIR}/forms/main_window.ui)
 

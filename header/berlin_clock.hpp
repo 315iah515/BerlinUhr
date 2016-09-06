@@ -2,10 +2,12 @@
 #define BERLIN_CLOCK_HPP_DEFINED
 
 #include <string>
+#include <vector>
 #include <ctime>
 
+#include "rgba.hpp"
 
-enum class LightsRow : uint32_t
+enum class LampRow : uint32_t
 {
    SINGLE_MINUTES = 0,
    FIVE_MINUTE_BLOCKS,
@@ -14,20 +16,34 @@ enum class LightsRow : uint32_t
    SECONDS_BLOCK
 };
 
+//--------------------------------------------------------------------------------------------------
+//  Class:
+//      BerlinClock
+//
+//  Summary:
+//      Provides all of the logic for the Mengenlehreclock
+//
+//
+//  Remarks:
+//      {Optional...}
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
 class BerlinClock
 {
 public:
+   using LampColors = std::vector<Rgba>;
+
    BerlinClock();
 
-   bool AssignTime(std::string const& CurrentTime);
-
-   std::string RetrieveLampRow(LightsRow vLampRow);
+   LampColors RetrieveLampRow(LampRow vLampRow);
 
 private:
-   std::tm mCurrentTime;
-   bool mValidTime;
+   std::tm *mpCurrentTime;
 
-   std::string CalculateLamps(LightsRow vLampRow, bool UseRemainder = true,
+   std::string CalculateLamps(LampRow vLampRow, bool UseRemainder = true,
                               bool HasMixedColors = false);
 
    bool ConvertStrToTime(std::string const& vTime);

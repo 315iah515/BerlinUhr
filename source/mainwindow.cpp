@@ -47,7 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mpFiveHourLayout(nullptr),
     mpOneHourLayout(nullptr),
     mpFiveMinuteLayout(nullptr),
-    mpOneMinuteLayout(nullptr)
+    mpOneMinuteLayout(nullptr),
+    mpTimer(new QTimer(this))
 
 {
     ui->setupUi(this);
@@ -63,6 +64,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->GraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     ui->GraphicsView->show();
+
+
+    connect(mpTimer, &QTimer::timeout, this, &MainWindow::UpdateClock);
+    mpTimer->start(1000);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -104,6 +109,7 @@ MainWindow::~MainWindow()
     delete mpSecondsLamp;
 
     //-
+    delete mpTimer;
     delete ui;
 }
 
@@ -303,7 +309,44 @@ MainWindow::CreateSceneLayout()
 
     mpScene = new QGraphicsScene(0, 0, 700, 700);
     mpScene->setSceneRect(0, 0, width, height);
-    mpScene->setBackgroundBrush(Qt::black);
+    mpScene->setBackgroundBrush(Qt::lightGray);
     mpScene->addItem(vpWidget);
+
+}
+
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      UpdateClock()
+//
+//  Summary:
+//      Slot - Does...
+//
+//
+//
+//  Exceptions:
+//      {Optional...}
+//
+//  Remarks:
+//
+//
+//  See Also:
+//      {Optional...}
+//--------------------------------------------------------------------------------------------------
+//
+void
+MainWindow::UpdateClock()
+{
+    QTime current_time = QTime::currentTime();
+
+    // using Colors = std::vector<QColor>;
+    // berlin.AssignTime(current_time);
+    // Colors items = berlin.RetrieveLampColors(vLampRow);
+    //
+    // for (int i = 0; i < mFiveHourLamps.size(); ++i)
+    // {
+    //    mFiveHourLamps[i]->setFillColor(items[i]);
+    // }
+    //
+    // ...
 
 }

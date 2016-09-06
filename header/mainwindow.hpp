@@ -58,6 +58,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void UpdateClock();
 
 
 private:
@@ -78,6 +79,8 @@ private:
     QGraphicsLinearLayout *mpOneHourLayout;
     QGraphicsLinearLayout *mpFiveMinuteLayout;
     QGraphicsLinearLayout *mpOneMinuteLayout;
+
+    QTimer    *mpTimer;
 
     void CreateActions();
     void CreateMenus();
