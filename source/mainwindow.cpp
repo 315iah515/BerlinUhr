@@ -257,8 +257,9 @@ void
 MainWindow::CreateSceneLayout()
 {
 
-    mpSecondsLayout = new QGraphicsLinearLayout;
+    mpSecondsLayout = new QGraphicsLinearLayout(Qt::Vertical);
     mpSecondsLayout->addItem(mpSecondsLamp);
+    mpSecondsLayout->setSpacing(sMargin);
 
     mpFiveHourLayout = new QGraphicsLinearLayout;
     for (auto const& lamp : mFiveHourLamps)
@@ -285,12 +286,13 @@ MainWindow::CreateSceneLayout()
     }
 
     mpContainerLayout = new QGraphicsGridLayout;
-    //mpContainerLayout->setSpacing(sMargin);
     mpContainerLayout->addItem(mpSecondsLayout, 0, 0);
+    mpContainerLayout->setRowSpacing(0, sMargin);
     mpContainerLayout->addItem(mpFiveHourLayout, 1, 0);
     mpContainerLayout->addItem(mpOneHourLayout, 2, 0);
     mpContainerLayout->addItem(mpFiveMinuteLayout, 3, 0);
     mpContainerLayout->addItem(mpOneMinuteLayout, 4, 0);
+
 
     QGraphicsWidget *vpWidget = new QGraphicsWidget;
     vpWidget->setLayout(mpContainerLayout);

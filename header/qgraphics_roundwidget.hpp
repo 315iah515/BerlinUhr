@@ -41,6 +41,9 @@ class QGraphicsRoundWidget : public QGraphicsWidget
 
 public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) Q_DECL_OVERRIDE;
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
+
     QColor fillColor() const;
     void setFillColor(QColor color);
 
