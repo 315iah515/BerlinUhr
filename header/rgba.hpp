@@ -123,7 +123,7 @@ Rgba::Rgba(unsigned int vColor)
 
 
 inline
-Rgba::Rgba(unsigned int vRed, unsigned int vGreen, unsigned int vBlue, unsigned int vAlpha)
+Rgba::Rgba(unsigned int vRed, unsigned int vGreen, unsigned int vBlue, unsigned int vAlpha = 255)
   : mBlue((unsigned char) vBlue),
     mGreen((unsigned char) vGreen),
     mRed((unsigned char) vRed),

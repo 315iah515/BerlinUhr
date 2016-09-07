@@ -43,9 +43,7 @@ public:
 private:
    std::tm *mpCurrentTime;
 
-   std::string CalculateLamps(LampRow vLampRow, bool UseRemainder = true,
-                              bool HasMixedColors = false);
-
+   LampColors CalculateLamps(LampRow vLampRow, bool UseRemainder = true, bool HasMixedColors = false);
    bool ConvertStrToTime(std::string const& vTime);
 
 };

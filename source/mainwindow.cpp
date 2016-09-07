@@ -155,7 +155,7 @@ MainWindow::CreateMenus()
 //      CreateLamps()
 //
 //  Summary:
-//      Instantiates all the lamps for the clock and places them into contains for later
+//      Instantiates all the lamps for the clock and places them into containers for later
 //      manipulation.
 //
 //
@@ -309,7 +309,7 @@ MainWindow::CreateSceneLayout()
 
     mpScene = new QGraphicsScene(0, 0, 700, 700);
     mpScene->setSceneRect(0, 0, width, height);
-    mpScene->setBackgroundBrush(Qt::lightGray);
+    mpScene->setBackgroundBrush(QColor(192, 192, 192));
     mpScene->addItem(vpWidget);
 
 }

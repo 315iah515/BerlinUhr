@@ -3,20 +3,27 @@
 #include <iostream>
 #include <cstdlib>
 #include <array>
+#include <tuple>
 #include "berlin_clock.hpp"
 
 
 namespace
 {
-   using LampPair = std::pair<unsigned int, unsigned int>;
+   const Rgba sRedOn(255, 39, 0);
+   const Rgba sRedOff(117, 41, 38);
+   const Rgba sYellowOn(252, 249, 0);
+   const Rgba sYellowOff(116, 108, 12);
 
-   std::array<LampPair, 5> sNumLampsPerRow = {
-      std::make_pair(4, 'Y'),
-      std::make_pair(11, 'Y'),
-      std::make_pair(4, 'R'),
-      std::make_pair(4, 'R'),
-      std::make_pair(1, 'R')
+   using LampTuple = std::tuple<unsigned int, Rgba, Rgba>;
+
+   std::array<LampTuple, 5> sNumLampsPerRow = {
+      std::make_tuple(4, sYellowOn, sYellowOff),
+      std::make_tuple(11, sYellowOn, sYellowOff),
+      std::make_tuple(4, sRedOn, sRedOff),
+      std::make_tuple(4, sRedOn, sRedOff),
+      std::make_tuple(1, sRedOn, sRedOff)
    };
+
 
 }
 
@@ -71,23 +78,23 @@ BerlinClock::RetrieveLampRow(LampRow vLampRow)
     time_t now = time(nullptr);
     mpCurrentTime = std::localtime(&now);
 
-//    switch (vLampRow)
-//    {
-//    case LampRow::SINGLE_MINUTES: LampResult = CalculateLamps(vLampRow);
-//        break;
+    switch (vLampRow)
+    {
+    case LampRow::SINGLE_MINUTES: LampResult = CalculateLamps(vLampRow);
+        break;
 
-//    case LampRow::FIVE_MINUTE_BLOCKS: LampResult = CalculateLamps(vLampRow, false, true);
-//        break;
+    case LampRow::FIVE_MINUTE_BLOCKS: LampResult = CalculateLamps(vLampRow, false, true);
+        break;
 
-//    case LampRow::ONE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow);
-//        break;
+    case LampRow::ONE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow);
+        break;
 
-//    case LampRow::FIVE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow, false);
-//        break;
+    case LampRow::FIVE_HOUR_BLOCKS: LampResult = CalculateLamps(vLampRow, false);
+        break;
 
-//    case LampRow::SECONDS_BLOCK: LampResult = CalculateLamps(vLampRow);
-//        break;
-//    }
+    case LampRow::SECONDS_BLOCK: LampResult = CalculateLamps(vLampRow);
+        break;
+    }
 
 
     return LampResult;
@@ -96,7 +103,7 @@ BerlinClock::RetrieveLampRow(LampRow vLampRow)
 
 //--------------------------------------------------------------------------------------------------
 //  Member Function:
-//      RetrieveLampRow()
+//      CalculateLamps()
 //
 //  Summary:
 //      Does...
@@ -113,10 +120,10 @@ BerlinClock::RetrieveLampRow(LampRow vLampRow)
 //      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
-std::string 
+BerlinClock::LampColors
 BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedColors)
 {
-   std::string Lamps;
+   LampColors LampResult;
 
    std::div_t Result{};
 
@@ -137,8 +144,7 @@ BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedCo
       Result.rem = Result.rem == 0 ? 1 : 0;
    }
 
-   unsigned int total_lamps = sNumLampsPerRow[(uint32_t)vLampRow].first;
-
+   unsigned int total_lamps = std::get<0>(sNumLampsPerRow[(uint32_t)vLampRow]);
    unsigned int number_of_lamps_on = (UseRemainder ? Result.rem : Result.quot);
    unsigned int number_of_lamps_off = total_lamps - number_of_lamps_on;
 
@@ -149,22 +155,31 @@ BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedCo
       {
          if ((i + 1) % 3 == 0)
          {
-            Lamps.append(1, 'R');
+            LampResult.push_back(sRedOn);
          }
          else
          {
-            Lamps.append(1, sNumLampsPerRow[(uint32_t)vLampRow].second);
+            LampResult.push_back(std::get<1>(sNumLampsPerRow[(uint32_t)vLampRow]));
          }
       }
    }
+   //- All other rows
    else
    {
-      Lamps.append(number_of_lamps_on, sNumLampsPerRow[(uint32_t)vLampRow].second);
+      for (int i = 0; i < number_of_lamps_on; ++i)
+      {
+          LampResult.push_back(std::get<1>(sNumLampsPerRow[(uint32_t)vLampRow]));
+      }
+
+   }
+
+   //- Now we handle all the lamps that are not turned on
+   for (int i = 0; i < number_of_lamps_off; ++i)
+   {
+        LampResult.push_back(std::get<2>(sNumLampsPerRow[(uint32_t)vLampRow]));
    }
    
-   Lamps.append(number_of_lamps_off, 'O');
-
-   return Lamps;
+   return LampResult;
 }
 
 //--------------------------------------------------------------------------------------------------
