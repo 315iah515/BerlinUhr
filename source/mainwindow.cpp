@@ -302,7 +302,7 @@ MainWindow::CreateSceneLayout()
     mpTopLevelLayout->addItem(mpSecondsLayout);
     mpTopLevelLayout->addItem(mpContainerLayout);
     mpTopLevelLayout->setSpacing(sMargin);
-    mpTopLevelLayout->setContentsMargins(2, 40, 2, 2);
+    mpTopLevelLayout->setContentsMargins(30, 40, 30, 30);
 
 
     QGraphicsWidget *vpWidget = new QGraphicsWidget;
