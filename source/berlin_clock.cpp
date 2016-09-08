@@ -21,7 +21,7 @@ namespace
       std::make_tuple(11, sYellowOn, sYellowOff),
       std::make_tuple(4, sRedOn, sRedOff),
       std::make_tuple(4, sRedOn, sRedOff),
-      std::make_tuple(1, sRedOn, sRedOff)
+      std::make_tuple(1, sYellowOn, sYellowOff)
    };
 
 
@@ -124,8 +124,8 @@ BerlinClock::LampColors
 BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedColors)
 {
    LampColors LampResult;
-
    std::div_t Result{};
+
 
    if (vLampRow == LampRow::SINGLE_MINUTES || vLampRow == LampRow::FIVE_MINUTE_BLOCKS)
    {

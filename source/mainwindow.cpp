@@ -14,6 +14,8 @@
 //
 #include <QtWidgets>
 
+#include <QtDebug>
+
 #include "mainwindow.hpp"
 #include "ui_main_window.h"
 #include "qgraphics_rectwidget.hpp"
@@ -69,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(mpTimer, &QTimer::timeout, this, &MainWindow::UpdateClock);
-    mpTimer->start(500);
+    mpTimer->start(900);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -373,4 +375,6 @@ MainWindow::UpdateClock()
 
     Colors = engine.RetrieveLampRow(LampRow::SECONDS_BLOCK);
     mpSecondsLamp->setFillColor(Colors[0].Color());
+
+    mpScene->update();
 }
