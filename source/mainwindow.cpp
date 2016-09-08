@@ -18,6 +18,7 @@
 #include "ui_main_window.h"
 #include "qgraphics_rectwidget.hpp"
 #include "qgraphics_roundwidget.hpp"
+#include "berlin_clock.hpp"
 
 namespace {
 
@@ -48,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mpOneHourLayout(nullptr),
     mpFiveMinuteLayout(nullptr),
     mpOneMinuteLayout(nullptr),
+    mpTopLevelLayout(nullptr),
     mpTimer(new QTimer(this))
 
 {
@@ -67,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(mpTimer, &QTimer::timeout, this, &MainWindow::UpdateClock);
-    mpTimer->start(1000);
+    mpTimer->start(500);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -265,7 +267,6 @@ MainWindow::CreateSceneLayout()
 
     mpSecondsLayout = new QGraphicsLinearLayout(Qt::Vertical);
     mpSecondsLayout->addItem(mpSecondsLamp);
-    mpSecondsLayout->setSpacing(sMargin);
 
     mpFiveHourLayout = new QGraphicsLinearLayout;
     for (auto const& lamp : mFiveHourLamps)
@@ -292,16 +293,20 @@ MainWindow::CreateSceneLayout()
     }
 
     mpContainerLayout = new QGraphicsGridLayout;
-    mpContainerLayout->addItem(mpSecondsLayout, 0, 0);
-    mpContainerLayout->setRowSpacing(0, sMargin);
-    mpContainerLayout->addItem(mpFiveHourLayout, 1, 0);
-    mpContainerLayout->addItem(mpOneHourLayout, 2, 0);
-    mpContainerLayout->addItem(mpFiveMinuteLayout, 3, 0);
-    mpContainerLayout->addItem(mpOneMinuteLayout, 4, 0);
+    mpContainerLayout->addItem(mpFiveHourLayout, 0, 0);
+    mpContainerLayout->addItem(mpOneHourLayout, 1, 0);
+    mpContainerLayout->addItem(mpFiveMinuteLayout, 2, 0);
+    mpContainerLayout->addItem(mpOneMinuteLayout, 3, 0);
+
+    mpTopLevelLayout = new QGraphicsLinearLayout(Qt::Vertical);
+    mpTopLevelLayout->addItem(mpSecondsLayout);
+    mpTopLevelLayout->addItem(mpContainerLayout);
+    mpTopLevelLayout->setSpacing(sMargin);
+    mpTopLevelLayout->setContentsMargins(2, 40, 2, 2);
 
 
     QGraphicsWidget *vpWidget = new QGraphicsWidget;
-    vpWidget->setLayout(mpContainerLayout);
+    vpWidget->setLayout(mpTopLevelLayout);
 
     int width = qRound(vpWidget->preferredWidth());
     int height = sViewHeight + (2 * sMargin);
@@ -336,17 +341,36 @@ MainWindow::CreateSceneLayout()
 void
 MainWindow::UpdateClock()
 {
-    QTime current_time = QTime::currentTime();
+    BerlinClock engine;
+    BerlinClock::LampColors Colors = engine.RetrieveLampRow(LampRow::FIVE_HOUR_BLOCKS);
 
-    // using Colors = std::vector<QColor>;
-    // berlin.AssignTime(current_time);
-    // Colors items = berlin.RetrieveLampColors(vLampRow);
-    //
-    // for (int i = 0; i < mFiveHourLamps.size(); ++i)
-    // {
-    //    mFiveHourLamps[i]->setFillColor(items[i]);
-    // }
-    //
-    // ...
+    for (int i = 0; i < mFiveHourLamps.size(); ++i)
+    {
+        mFiveHourLamps[i]->setFillColor(Colors[i].Color());
+    }
 
+
+    Colors = engine.RetrieveLampRow(LampRow::ONE_HOUR_BLOCKS);
+
+    for (int i = 0; i < mOneHourLamps.size(); ++i)
+    {
+        mOneHourLamps[i]->setFillColor(Colors[i].Color());
+    }
+
+    Colors = engine.RetrieveLampRow(LampRow::FIVE_MINUTE_BLOCKS);
+
+    for (int i = 0; i < mFiveMinuteLamps.size(); ++i)
+    {
+        mFiveMinuteLamps[i]->setFillColor(Colors[i].Color());
+    }
+
+    Colors = engine.RetrieveLampRow(LampRow::SINGLE_MINUTES);
+
+    for (int i = 0; i < mOneMinuteLamps.size(); ++i)
+    {
+        mOneMinuteLamps[i]->setFillColor(Colors[i].Color());
+    }
+
+    Colors = engine.RetrieveLampRow(LampRow::SECONDS_BLOCK);
+    mpSecondsLamp->setFillColor(Colors[0].Color());
 }

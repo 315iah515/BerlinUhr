@@ -79,6 +79,8 @@ private:
     QGraphicsLinearLayout *mpOneHourLayout;
     QGraphicsLinearLayout *mpFiveMinuteLayout;
     QGraphicsLinearLayout *mpOneMinuteLayout;
+    QGraphicsLinearLayout *mpTopLevelLayout;
+
 
     QTimer    *mpTimer;
 
