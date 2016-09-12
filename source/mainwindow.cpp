@@ -128,7 +128,7 @@ MainWindow::~MainWindow()
 QSize
 MainWindow::sizeHint() const
 {
-    return QSize(650, 650);
+    return QSize(500, 500);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -189,29 +189,10 @@ MainWindow::mouseMoveEvent(QMouseEvent *event)
 //
 //--------------------------------------------------------------------------------------------------
 //
-//void
-//MainWindow::resizeEvent(QResizeEvent* )
-//{
-
-//    int diameter = 90;
-//    QRectF Rect(mpSecondsLayout->geometry());
-//    int x = Rect.center().x() - diameter/2;
-//    int y = Rect.center().y() - diameter/2;
-
-//    QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
-
-
-//    Rect = mpContainerLayout->geometry();
-//    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
-//                                   QRegion::Rectangle);
-
-//    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
-//    setMask(United);
-//}
-
-/*void
-MainWindow::paintEvent(QPaintEvent *event)
+void
+MainWindow::resizeEvent(QResizeEvent * )
 {
+
     int diameter = 90;
     QRectF Rect(mpSecondsLayout->geometry());
     int x = Rect.center().x() - diameter/2;
@@ -220,14 +201,14 @@ MainWindow::paintEvent(QPaintEvent *event)
     QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
 
 
-    Rect = mpContainerLayout->geometry();
-    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
-                                   QRegion::Rectangle);
+//    Rect = mpContainerLayout->geometry();
+//    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
+//                                   QRegion::Rectangle);
 
-    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
-    QPainter painter(this);
-    painter.setClipRegion(United);
-}*/
+//    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
+    setMask(SecondsMaskedRegion);
+}
+
 
 //--------------------------------------------------------------------------------------------------
 //  Member Function:
@@ -409,9 +390,9 @@ MainWindow::CreateSceneLayout()
     int height = sViewHeight + (2 * sMargin);
     setMinimumSize(width, height);
 
-    mpScene = new QGraphicsScene(0, 0, 700, 700);
+    mpScene = new QGraphicsScene(0, 0, 400, 400);
     mpScene->setSceneRect(0, 0, width, height);
-    mpScene->setBackgroundBrush(QColor(192, 192, 192));
+    mpScene->setBackgroundBrush(QColor(134, 163, 249));
     mpScene->addItem(vpWidget);
 
 }
