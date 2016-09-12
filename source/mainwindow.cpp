@@ -17,7 +17,6 @@
 #include <QtDebug>
 
 #include "mainwindow.hpp"
-#include "ui_main_window.h"
 #include "qgraphics_rectwidget.hpp"
 #include "qgraphics_roundwidget.hpp"
 #include "berlin_clock.hpp"
@@ -40,8 +39,8 @@ namespace {
 //--------------------------------------------------------------------------------------------------
 //
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow),
+    QWidget(parent, Qt::FramelessWindowHint),
+    mpGraphicsView(nullptr),
     mpScene(nullptr),
     mpExitAct(nullptr),
     mpSecondsLamp(nullptr),
@@ -55,19 +54,20 @@ MainWindow::MainWindow(QWidget *parent) :
     mpTimer(new QTimer(this))
 
 {
-    ui->setupUi(this);
+
     CreateActions();
-    CreateMenus();
     CreateLamps();
     CreateSceneLayout();
 
-    ui->GraphicsView->setScene(mpScene);
-    ui->GraphicsView->setFrameStyle(0);
-    ui->GraphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    ui->GraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->GraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mpGraphicsView = new QGraphicsView(this);
+    mpGraphicsView->setRenderHints(QPainter::Antialiasing| QPainter::TextAntialiasing);
+    mpGraphicsView->setScene(mpScene);
+    mpGraphicsView->setFrameStyle(0);
+    mpGraphicsView->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    mpGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    mpGraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    ui->GraphicsView->show();
+    mpGraphicsView->show();
 
 
     connect(mpTimer, &QTimer::timeout, this, &MainWindow::UpdateClock);
@@ -111,11 +111,123 @@ MainWindow::~MainWindow()
     }
 
     delete mpSecondsLamp;
-
-    //-
     delete mpTimer;
-    delete ui;
 }
+
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      sizeHint()
+//
+//  Summary:
+//
+//
+//   Returns:
+//      QSize instance set to the minimumu for the clock
+//--------------------------------------------------------------------------------------------------
+//
+QSize
+MainWindow::sizeHint() const
+{
+    return QSize(650, 650);
+}
+
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      mousePressEvent()
+//
+//  Summary:
+//      Grabs the current screen position of left mouse button when depressed.
+//
+//   Parameters:
+//      event -
+//          [in, out] Mutable pointer to Mouse event
+//--------------------------------------------------------------------------------------------------
+//
+void
+MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        mDragPosition = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      mouseMoveEvent()
+//
+//  Summary:
+//      Moves the widget once the left mouse button is pressed to the screen position determined
+//      by the the mouse drag.
+//
+//   Parameters:
+//      event -
+//          [in, out] Mutable pointer to Mouse event
+//--------------------------------------------------------------------------------------------------
+//
+void
+MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        move(event->globalPos() - mDragPosition);
+        event->accept();
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      resizeEvent()
+//
+//  Summary:
+//      Does...
+//
+//   Parameters:
+//      QResizeEvent -
+//          [in, out] Unused mutable event pointer
+//
+//--------------------------------------------------------------------------------------------------
+//
+//void
+//MainWindow::resizeEvent(QResizeEvent* )
+//{
+
+//    int diameter = 90;
+//    QRectF Rect(mpSecondsLayout->geometry());
+//    int x = Rect.center().x() - diameter/2;
+//    int y = Rect.center().y() - diameter/2;
+
+//    QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
+
+
+//    Rect = mpContainerLayout->geometry();
+//    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
+//                                   QRegion::Rectangle);
+
+//    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
+//    setMask(United);
+//}
+
+/*void
+MainWindow::paintEvent(QPaintEvent *event)
+{
+    int diameter = 90;
+    QRectF Rect(mpSecondsLayout->geometry());
+    int x = Rect.center().x() - diameter/2;
+    int y = Rect.center().y() - diameter/2;
+
+    QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
+
+
+    Rect = mpContainerLayout->geometry();
+    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
+                                   QRegion::Rectangle);
+
+    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
+    QPainter painter(this);
+    painter.setClipRegion(United);
+}*/
 
 //--------------------------------------------------------------------------------------------------
 //  Member Function:
@@ -132,26 +244,11 @@ void
 MainWindow::CreateActions()
 {
     mpExitAct = new QAction(tr("E&xit"), this);
-    mpExitAct->setShortcuts(QKeySequence::Quit);
+    mpExitAct->setShortcut(tr("Ctrl+Q"));
     mpExitAct->setStatusTip(tr("Exit the application"));
     connect(mpExitAct, &QAction::triggered, this, &QWidget::close);
+    addAction(mpExitAct);
 
-}
-
-//--------------------------------------------------------------------------------------------------
-//  Member Function:
-//      CreateMenus()
-//
-//  Summary:
-//      Does...
-//
-//
-//--------------------------------------------------------------------------------------------------
-//
-void
-MainWindow::CreateMenus()
-{
-    ui->menu_File->addAction(mpExitAct);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -167,8 +264,6 @@ MainWindow::CreateMenus()
 //      deallocation of lamps takes place in deconstrcutor and may need to be removed if scene
 //      takes ownership of pointers
 //
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 void

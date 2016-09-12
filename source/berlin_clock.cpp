@@ -58,7 +58,11 @@ BerlinClock::BerlinClock()
 //  Summary:
 //      Slot - Does...
 //
-//
+//   Parameters:
+//      FP1 -
+//          [in, out] Abc...
+//      FP2 -
+//          [in, out] Xyz...
 //
 //  Exceptions:
 //      {Optional...}
@@ -108,7 +112,11 @@ BerlinClock::RetrieveLampRow(LampRow vLampRow)
 //  Summary:
 //      Does...
 //
-//
+//  Parameters:
+//      FP1 -
+//          [in, out] Abc...
+//      FP2 -
+//          [in, out] Xyz...
 //
 //  Exceptions:
 //      {Optional...}
@@ -189,7 +197,11 @@ BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedCo
 //  Summary:
 //      Does...
 //
-//
+//   Parameters:
+//      FP1 -
+//          [in, out] Abc...
+//      FP2 -
+//          [in, out] Xyz...
 //
 //  Exceptions:
 //      {Optional...}

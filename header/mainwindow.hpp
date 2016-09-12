@@ -18,16 +18,12 @@
 #ifndef MAINWINDOW_HPP_DEFINED
 #define MAINWINDOW_HPP_DEFINED
 
-#include <QMainWindow>
+#include <QWidget>
 #include <vector>
 
 
-namespace Ui {
-class MainWindow;
-}
-
-
 class QAction;
+class QGraphicsView;
 class QGraphicsScene;
 class QGraphicsRectWidget;
 class QGraphicsRoundWidget;
@@ -49,13 +45,21 @@ class QGraphicsGridLayout;
 //      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    QSize sizeHint() const Q_DECL_OVERRIDE;
+
+protected:
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    //void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    //void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void UpdateClock();
@@ -64,7 +68,7 @@ private slots:
 private:
     using RectContainer = std::vector<QGraphicsRectWidget*>;
 
-    Ui::MainWindow        *ui;
+    QGraphicsView        *mpGraphicsView;
     QGraphicsScene        *mpScene;
     QAction               *mpExitAct;
     RectContainer         mFiveHourLamps;
@@ -83,9 +87,9 @@ private:
 
 
     QTimer    *mpTimer;
+    QPoint     mDragPosition;
 
     void CreateActions();
-    void CreateMenus();
     void CreateLamps();
     void CreateSceneLayout();
 

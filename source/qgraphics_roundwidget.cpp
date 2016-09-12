@@ -20,21 +20,18 @@
 //      paint
 //
 //  Summary:
-//      Does...
+//      Draws the ellipse that displays seconds. The ellipse is drawn at the upper
+//      right corner from the center of the bounding box.
 //
 //
 //  Parameters:
-//      FP1 -
-//          [in, out] Abc...
-//      FP2 -
-//          [in, out] Xyz...
+//      painter -
+//          [in, out] Pointer to painter instance
+//      QStyleOptionGraphicsItem -
+//          [in, out] Unused parameters Dictated by Q widget hierarchy
+//      QWidget -
+//          [in, out] Unused parameters Dictated by Q widget hierarchy
 //
-//  Returns:
-//      {Optional...}
-//
-//
-//  Remarks:
-//      {Optional...}
 //
 //--------------------------------------------------------------------------------------------------
 //
@@ -51,12 +48,42 @@ QGraphicsRoundWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 }
 
 
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      minimumSizeHint
+//
+//  Summary:
+//      Returns the minimum size of the seconds lamp. Don’t want the lamp to be too small in
+//      comparison to the other lamps which are rectangles.
+//
+//
+//  Returns:
+//      QSize instance
+//
+//
+//--------------------------------------------------------------------------------------------------
+//
 QSize
 QGraphicsRoundWidget::minimumSizeHint() const
 {
     return QSize(40, 40);
 }
 
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      sizeHint
+//
+//  Summary:
+//      Returns the recommended size for the seconds lamp.
+//      This is the bounding box dimensions of the ellipse that is drawn.
+//
+//
+//  Returns:
+//      QSize instance
+//
+//
+//--------------------------------------------------------------------------------------------------
+//
 QSize
 QGraphicsRoundWidget::sizeHint() const
 {
