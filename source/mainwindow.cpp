@@ -8,8 +8,6 @@
 //  Authors:
 //      Ian Heaton
 //
-//  Copyright Notice:
-//
 //==================================================================================================
 //
 #include <QtWidgets>
@@ -87,8 +85,6 @@ MainWindow::MainWindow(QWidget *parent) :
 //
 MainWindow::~MainWindow()
 {
-    //- This maybe temp as the scene may take ownership of these once their inserted
-    //- delete lamp pointers
 
     for (auto& lamp : mFiveHourLamps)
     {
@@ -119,7 +115,7 @@ MainWindow::~MainWindow()
 //      sizeHint()
 //
 //  Summary:
-//
+//     Maintains static size of the widget housing the clock
 //
 //   Returns:
 //      QSize instance set to the minimumu for the clock
@@ -181,7 +177,7 @@ MainWindow::mouseMoveEvent(QMouseEvent *event)
 //      resizeEvent()
 //
 //  Summary:
-//      Does...
+//
 //
 //   Parameters:
 //      QResizeEvent -
@@ -189,25 +185,25 @@ MainWindow::mouseMoveEvent(QMouseEvent *event)
 //
 //--------------------------------------------------------------------------------------------------
 //
-void
-MainWindow::resizeEvent(QResizeEvent * )
-{
+//void
+//MainWindow::resizeEvent(QResizeEvent * )
+//{
 
-    int diameter = 90;
-    QRectF Rect(mpSecondsLayout->geometry());
-    int x = Rect.center().x() - diameter/2;
-    int y = Rect.center().y() - diameter/2;
+//    int diameter = 90;
+//    QRectF Rect(mpSecondsLayout->geometry());
+//    int x = Rect.center().x() - diameter/2;
+//    int y = Rect.center().y() - diameter/2;
 
-    QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
+//    QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
 
 
-//    Rect = mpContainerLayout->geometry();
-//    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
-//                                   QRegion::Rectangle);
+////    Rect = mpContainerLayout->geometry();
+////    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
+////                                   QRegion::Rectangle);
 
-//    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
-    setMask(SecondsMaskedRegion);
-}
+////    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
+//    setMask(SecondsMaskedRegion);
+//}
 
 
 //--------------------------------------------------------------------------------------------------
@@ -215,7 +211,7 @@ MainWindow::resizeEvent(QResizeEvent * )
 //      CreateActions()
 //
 //  Summary:
-//      Creates the QActions that are invoked from the QMenu items within the min window.
+//      Creates the QActions that are invoked from the QMenu items within the main window.
 //
 //
 //
@@ -322,21 +318,13 @@ MainWindow::CreateLamps()
 //      CreateSceneLayout()
 //
 //  Summary:
-//      Does...
+//      Creates the different graphics layouts to house the different lamp rows and places them
+//      within a Qgraphic Scene.
 //
-//
-//
-//  Returns:
-//      {Optional...}
-//
-//  Exceptions:
-//      {Optional...}
 //
 //  Remarks:
 //
 //
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 void
@@ -402,18 +390,13 @@ MainWindow::CreateSceneLayout()
 //      UpdateClock()
 //
 //  Summary:
-//      Slot - Does...
+//      Slot - Callback invoked by the timer to color each lamp for the current system time.
 //
-//
-//
-//  Exceptions:
-//      {Optional...}
 //
 //  Remarks:
+//      Scene updated
 //
 //
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 void

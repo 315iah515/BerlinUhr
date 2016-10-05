@@ -38,11 +38,6 @@ class QGraphicsGridLayout;
 //      Holds the graphics scene housing the Mengenlehreclock
 //
 //
-//  Remarks:
-//      {Optional...}
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 class MainWindow : public QWidget
@@ -58,7 +53,7 @@ public:
 protected:
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    //void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void UpdateClock();

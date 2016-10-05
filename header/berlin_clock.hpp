@@ -1,3 +1,13 @@
+//========================================================================================
+//  File Name:
+//      berlin_clock.hpp
+//
+//
+//  Authors:
+//      Ian Heaton
+//
+//========================================================================================
+//
 #ifndef BERLIN_CLOCK_HPP_DEFINED
 #define BERLIN_CLOCK_HPP_DEFINED
 
@@ -7,6 +17,9 @@
 
 #include "rgba.hpp"
 
+//==================================================================================================
+// Used by client to specify which lamp row is to be retrieved
+//==================================================================================================
 enum class LampRow : uint32_t
 {
    SINGLE_MINUTES = 0,
@@ -25,10 +38,8 @@ enum class LampRow : uint32_t
 //
 //
 //  Remarks:
-//      {Optional...}
+//      please see http://agilekatas.co.uk/katas/BerlinClock-Kata
 //
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 class BerlinClock

@@ -5,13 +5,8 @@
 //  Product:
 //      BerlinUhr
 //
-//  Interface Header:
-//
-//
 //  Authors:
 //      Ian Heaton
-//
-//  Copyright Notice:
 //
 //==================================================================================================
 //
@@ -26,12 +21,6 @@
 //  Summary:
 //      Does ...
 //
-//
-//  Remarks:
-//      {Optional...}
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 class QGraphicsRoundWidget : public QGraphicsWidget

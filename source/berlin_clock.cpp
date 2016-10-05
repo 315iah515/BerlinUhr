@@ -1,3 +1,13 @@
+//========================================================================================
+//  File Name:
+//      berlin_clock.cpp
+//
+//
+//  Authors:
+//      Ian Heaton
+//
+//========================================================================================
+//
 #include <iomanip>
 #include <sstream>
 #include <iostream>
@@ -32,18 +42,12 @@ namespace
 //      BerlinClock()
 //
 //  Summary:
-//      Slot - Does...
+//     Constructor for Berlin Clock
 //
-//
-//
-//  Exceptions:
-//      {Optional...}
 //
 //  Remarks:
 //
 //
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 BerlinClock::BerlinClock()
@@ -56,22 +60,14 @@ BerlinClock::BerlinClock()
 //      RetrieveLampRow()
 //
 //  Summary:
-//      Slot - Does...
+//      Determines the number of lamps on and off for a particular row and the current time.
 //
 //   Parameters:
-//      FP1 -
-//          [in, out] Abc...
-//      FP2 -
-//          [in, out] Xyz...
-//
-//  Exceptions:
-//      {Optional...}
+//      vLampRow -
+//          [in] Enumeration that specifies the desired lamp row
 //
 //  Remarks:
 //
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 BerlinClock::LampColors
@@ -110,22 +106,18 @@ BerlinClock::RetrieveLampRow(LampRow vLampRow)
 //      CalculateLamps()
 //
 //  Summary:
-//      Does...
+//     Performs all of the heavy lifting in computing which lamps are on vs off.
 //
 //  Parameters:
-//      FP1 -
-//          [in, out] Abc...
-//      FP2 -
-//          [in, out] Xyz...
+//      vLampRow -
+//          [in] The lamp row desired.
+//      UseRemainder -
+//          [in] Some rows will use the remainder from the division of the current hour and the
+//          value 5 to determine the number of lamps in the on state.
+//      HasMixedColors -
+//          [in] Determines if two different colors are to be used for painting those lamps
+//          that are on.
 //
-//  Exceptions:
-//      {Optional...}
-//
-//  Remarks:
-//
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 BerlinClock::LampColors
@@ -195,22 +187,13 @@ BerlinClock::CalculateLamps(LampRow vLampRow, bool UseRemainder, bool HasMixedCo
 //      ConvertStrToTime()
 //
 //  Summary:
-//      Does...
+//      Utility method that converts a string to a time structure housing the date and time;
+//      used for testing
 //
 //   Parameters:
-//      FP1 -
-//          [in, out] Abc...
-//      FP2 -
-//          [in, out] Xyz...
+//      vTime -
+//          [in] Immutable string housing the time to test.
 //
-//  Exceptions:
-//      {Optional...}
-//
-//  Remarks:
-//
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 bool
