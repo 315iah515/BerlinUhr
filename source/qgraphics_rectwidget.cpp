@@ -8,7 +8,6 @@
 //  Authors:
 //      Ian Heaton
 //
-//  Copyright Notice:
 //
 //==================================================================================================
 //
@@ -18,29 +17,21 @@
 
 //--------------------------------------------------------------------------------------------------
 //  Member Function:
-//      MEMBER_FUNCTION_NAME()
+//      paint()
 //
 //  Summary:
-//      Does...
+//      Draws a rectangle with a fill color
 //
 //
 //  Parameters:
-//      FP1 -
-//          [in, out] Abc...
-//      FP2 -
-//          [in, out] Xyz...
+//      painter -
+//          [in, out] mutable painter instance that draws the shape to the widget
+//      QStyleOptionGraphicsItem -
+//          [in, out] Not used
+//      QWidget -
+//          [in, out] Not used
 //
-//  Returns:
-//      {Optional...}
 //
-//  Exceptions:
-//      {Optional...}
-//
-//  Remarks:
-//      {Optional...}
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 void

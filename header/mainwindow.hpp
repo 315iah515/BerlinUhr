@@ -5,13 +5,9 @@
 //  Product:
 //      BerlinUhr
 //
-//  Interface Header:
-//
 //
 //  Authors:
 //      Ian Heaton
-//
-//  Copyright Notice:
 //
 //==================================================================================================
 //
@@ -53,7 +49,6 @@ public:
 protected:
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    //void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void UpdateClock();

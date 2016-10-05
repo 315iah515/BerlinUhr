@@ -5,13 +5,8 @@
 //  Product:
 //      BerlinUhr
 //
-//  Interface Header:
-//
-//
 //  Authors:
 //      Ian Heaton
-//
-//  Copyright Notice:
 //
 //==================================================================================================
 //
@@ -24,14 +19,9 @@
 //      QGraphicsRectWidget
 //
 //  Summary:
-//      Does ...
+//      Represents a single lamp that is either in the On or Off state.
 //
 //
-//  Remarks:
-//      {Optional...}
-//
-//  See Also:
-//      {Optional...}
 //--------------------------------------------------------------------------------------------------
 //
 class QGraphicsRectWidget : public QGraphicsWidget
@@ -49,12 +39,39 @@ private:
 
 };
 
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      fillColor()
+//
+//  Summary:
+//      Retrieves the fill color of a lamp instance
+//
+//  Returns:
+//      A QColor instance
+//
+//--------------------------------------------------------------------------------------------------
+//
 QColor inline
 QGraphicsRectWidget::fillColor() const
 {
     return mFillColor;
 }
 
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      setFillColor()
+//
+//  Summary:
+//      Assigns a color to be used to fill the lamp
+//
+//
+//  Parameters:
+//      color -
+//          [in] QColor instance
+//
+//
+//--------------------------------------------------------------------------------------------------
+//
 void inline
 QGraphicsRectWidget::setFillColor(QColor color)
 {

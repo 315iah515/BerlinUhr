@@ -19,7 +19,7 @@
 //      QGraphicsRoundWidget
 //
 //  Summary:
-//      Does ...
+//      Represent sthe lamp used to display seconds
 //
 //--------------------------------------------------------------------------------------------------
 //
@@ -41,12 +41,39 @@ private:
 
 };
 
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      fillColor()
+//
+//  Summary:
+//      Retrieves the fill color of the seconds lamp instance
+//
+//  Returns:
+//      A QColor instance
+//
+//--------------------------------------------------------------------------------------------------
+//
 QColor inline
 QGraphicsRoundWidget::fillColor() const
 {
     return mFillColor;
 }
 
+//--------------------------------------------------------------------------------------------------
+//  Member Function:
+//      setFillColor()
+//
+//  Summary:
+//      Assigns a color to be used to fill the seconds lamp
+//
+//
+//  Parameters:
+//      color -
+//          [in] QColor instance
+//
+//
+//--------------------------------------------------------------------------------------------------
+//
 void inline
 QGraphicsRoundWidget::setFillColor(QColor color)
 {

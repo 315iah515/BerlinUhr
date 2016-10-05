@@ -174,40 +174,6 @@ MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 //--------------------------------------------------------------------------------------------------
 //  Member Function:
-//      resizeEvent()
-//
-//  Summary:
-//
-//
-//   Parameters:
-//      QResizeEvent -
-//          [in, out] Unused mutable event pointer
-//
-//--------------------------------------------------------------------------------------------------
-//
-//void
-//MainWindow::resizeEvent(QResizeEvent * )
-//{
-
-//    int diameter = 90;
-//    QRectF Rect(mpSecondsLayout->geometry());
-//    int x = Rect.center().x() - diameter/2;
-//    int y = Rect.center().y() - diameter/2;
-
-//    QRegion SecondsMaskedRegion(x, y, Rect.width(), Rect.height(), QRegion::Ellipse);
-
-
-////    Rect = mpContainerLayout->geometry();
-////    QRegion OtherLampsMaskedRegion(Rect.x(), Rect.y(), Rect.width(), Rect.height(),
-////                                   QRegion::Rectangle);
-
-////    QRegion United(OtherLampsMaskedRegion.united(SecondsMaskedRegion));
-//    setMask(SecondsMaskedRegion);
-//}
-
-
-//--------------------------------------------------------------------------------------------------
-//  Member Function:
 //      CreateActions()
 //
 //  Summary:
